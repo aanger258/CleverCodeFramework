@@ -1,5 +1,7 @@
 <?php
 
+	$time = microtime();
+
 	require_once(realpath(__DIR__.'/../config/Settings.php'));
 
 	require_once(realpath(__DIR__.'/../Framework/Autoloading/Autoloader.php'));
@@ -13,3 +15,10 @@
 
 	$app->handle(Request::instance());
 
+	$app->boot();
+
+	$controller = new $app->params['controller'];
+
+	echo microtime() - $time.PHP_EOL;
+
+	$controller->{$app->params['function']}();

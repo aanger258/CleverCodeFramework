@@ -1,9 +1,7 @@
 <?php 
 	namespace Framework\HTTP\Request\Classes;
 
-	use Framework\HTTP\Request\Interfaces\Request as RequestInterface;
-
-	Class Request implements RequestInterface
+	class Request
 	{
 		protected static $_instance;
 
@@ -19,16 +17,40 @@
         	return self::$_instance;
 		}
 
-		public static function getParam($key=array()){
+		public static function getParams($key=array()){
+			$data = array();
+			if(empty($key)){
+				foreach($_REQUEST AS $key=>$item)
+					$data[$key] = $item;
+			}
+			else{
+				foreach($key as $item){
+					$data[$item] = $_REQUEST[$item];
+				}
+			}
+			return $data;
+		}
+
+		public static function getParamsExcept($key = array()){
+			if(empty($key))
+				return $_REQUEST;
+			$data = $_REQUEST;
+			foreach ($key as $item) {
+				unset($data[$item]);
+			}
+			return $data;
 		}
 
 		public static function getClient($key=array()){
+
 		}
 
 		public static function getSession($key=array()){
+
 		}
 
 		public static function getCookies($key=array()){
+
 		}
 
 		public static function build(){
@@ -37,11 +59,13 @@
 		}
 
 		public static function getCurrentRoute(){
-			self::$path = trim($_SERVER['REQUEST_URI'],'/');
+			self::$path = explode('?',trim($_SERVER['REQUEST_URI'],'/'));
+			self::$path = self::$path[0];
+			if(empty(self::$path))
+				self::$path = '/';
 		}
 
-		public static function getRequestType()
-		{
+		public static function getRequestType(){
 			self::$request_type = strtolower($_SERVER['REQUEST_METHOD']);
 		}
 

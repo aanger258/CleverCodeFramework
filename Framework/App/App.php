@@ -4,13 +4,19 @@
 
 	use Framework\HTTP\Request\Classes\Request;
 	use Framework\HTTP\Routes\Classes\Route;
+	use Framework\Booting\Classes\Booter;
 
 	class App
 	{
+		public $params;
 
-		public function handle(Request $req)
-		{
+		public function handle(Request $req){
 			$req::build();
-			Route::getRoute($req);
+			$this->params = Route::getRoute($req);
+		}
+
+		public function boot(){
+			Booter::session();
+			Booter::database();
 		}
 	}
