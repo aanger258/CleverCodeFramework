@@ -43,14 +43,14 @@
 
 		private static function setRoute($group){
 			$group['route'] = ltrim($group['route'],'/');
-			if(empty($group['route']))
-				$group['route'] = '/';
-			self::$routes[$group['type']][$group['route']]=array('controller'=>$group['namespace'].$group['controller'], 'function'=>$group['function'],'name' => $group['name'] , 'middle' => $group['middle']);
+			self::$routes[$group['type']][$group['route']]=array('controller'=>$group['namespace'].$group['controller'], 'function'=>$group['function'],'name' => $group['name'] , 'middle' => $group['middle'], 'booters'=> $group['booters']);
 		}
 
 		private static function setDefaults($group){
 			if(!isset($group['route']))
 				$group['route'] = '/';
+			if(!isset($group['booters']))
+				$group['booters'] = array();
 			if(!isset($group['name']))
 				$group['name'] = 'unnamed';
 			if(!isset($group['controller']))

@@ -10,6 +10,12 @@
 		public static function session(){
 			Session::enable();
 		}
+		
+		public static function call($booter){
+			$booter = BOOTERS_NAMESPACE.$booter;
+			$booter = new $booter;
+			$booter->execute();
+		}
 
 		public static function database(){
 			Connection::enable();

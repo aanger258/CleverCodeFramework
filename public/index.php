@@ -2,6 +2,10 @@
 
 	$time = microtime();
 
+	error_reporting(E_ALL);
+	ini_set('display_errors', 'On');
+
+
 	require_once(realpath(__DIR__.'/../config/Settings.php'));
 
 	require_once(realpath(__DIR__.'/../Framework/Autoloading/Autoloader.php'));
@@ -17,8 +21,10 @@
 
 	$app->boot();
 
+
+
 	$controller = new $app->params['controller'];
 
-	echo microtime() - $time.PHP_EOL;
+	//echo microtime() - $time.PHP_EOL;
 
 	$controller->{$app->params['function']}();

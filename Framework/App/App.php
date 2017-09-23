@@ -17,6 +17,8 @@
 
 		public function boot(){
 			Booter::session();
+			foreach($this->params['booters'] as $booter)
+				Booter::call($booter);
 			Booter::database();
 		}
 	}
